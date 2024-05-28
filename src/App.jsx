@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import "./App.css";
 import TaskForm from "./components/TaskForm";
@@ -8,13 +8,20 @@ import doingIcon from "./assets/glowing-star.png";
 import doneIcon from "./assets/check-mark-button.png";
 
 const App = () => {
+  const [tasks, setTasks] = useState([]);
+  console.log(tasks);
   return (
     <div className="app">
-      <TaskForm />
+      <TaskForm setTasks={setTasks} />
       <main className="app_main">
-        <TaskColumn title="To do" icon={todoIcon} />
-        <TaskColumn title="Doing" icon={doingIcon} />
-        <TaskColumn title="Done" icon={doneIcon} />
+        <TaskColumn tasks={tasks} status="todo" title="To do" icon={todoIcon} />
+        <TaskColumn
+          tasks={tasks}
+          status="doing"
+          title="Doing"
+          icon={doingIcon}
+        />
+        <TaskColumn tasks={tasks} status="done" title="Done" icon={doneIcon} />
       </main>
     </div>
   );
