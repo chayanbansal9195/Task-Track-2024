@@ -20,6 +20,22 @@ const App = () => {
     const newTasks = tasks.filter((task, index) => index !== taskIndex);
     setTasks(newTasks);
   };
+
+  const onDrop = (status, position) => {
+    console.log(
+      `${activeCard} is going to place into ${status} and at position ${position}`
+    );
+    if (activeCard == null || activeCard === undefined) return;
+
+    const taskToMove = tasks[activeCard];
+    const updatedTasks = tasks.filter((task, index) => index !== activeCard);
+    updatedTasks.splice(position, 0, {
+      ...taskToMove,
+      status: status,
+    });
+    setTasks(updatedTasks);
+  };
+
   return (
     <div className="app">
       <TaskForm setTasks={setTasks} />
@@ -31,6 +47,7 @@ const App = () => {
           status="todo"
           title="To do"
           icon={todoIcon}
+          onDrop={onDrop}
         />
         <TaskColumn
           handleDelete={handleDelete}
@@ -39,6 +56,7 @@ const App = () => {
           status="doing"
           title="Doing"
           icon={doingIcon}
+          onDrop={onDrop}
         />
         <TaskColumn
           handleDelete={handleDelete}
@@ -47,9 +65,9 @@ const App = () => {
           status="done"
           title="Done"
           icon={doneIcon}
+          onDrop={onDrop}
         />
       </main>
-      <h1>Active Card - {activeCard}</h1>
     </div>
   );
 };
