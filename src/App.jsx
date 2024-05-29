@@ -10,6 +10,7 @@ import doneIcon from "./assets/check-mark-button.png";
 const App = () => {
   const oldTasks = localStorage.getItem("tasks");
   const [tasks, setTasks] = useState(JSON.parse(oldTasks) || []);
+  const [activeCard, setActiveCard] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -26,12 +27,14 @@ const App = () => {
         <TaskColumn
           tasks={tasks}
           handleDelete={handleDelete}
+          setActiveCard={setActiveCard}
           status="todo"
           title="To do"
           icon={todoIcon}
         />
         <TaskColumn
           handleDelete={handleDelete}
+          setActiveCard={setActiveCard}
           tasks={tasks}
           status="doing"
           title="Doing"
@@ -39,12 +42,14 @@ const App = () => {
         />
         <TaskColumn
           handleDelete={handleDelete}
+          setActiveCard={setActiveCard}
           tasks={tasks}
           status="done"
           title="Done"
           icon={doneIcon}
         />
       </main>
+      <h1>Active Card - {activeCard}</h1>
     </div>
   );
 };
